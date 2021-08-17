@@ -13,11 +13,17 @@ public class TaskService {
 
   private final TaskRepository taskRepository;
   private final AuthService authService;
+  private final TaskTimerRepository taskTimerRepository;
 
   @Autowired
-  public TaskService(AuthService authService, TaskRepository taskRepository) {
+  public TaskService(
+    AuthService authService,
+    TaskRepository taskRepository,
+    TaskTimerRepository taskTimerRepository
+  ) {
     this.authService = authService;
     this.taskRepository = taskRepository;
+    this.taskTimerRepository = taskTimerRepository;
   }
 
   // test without above tk
@@ -34,14 +40,14 @@ public class TaskService {
     task = taskRepository.save(task);
 
     // add the automatically assigned ID to the DTO
-    return map(task);
+    return mapTask(task);
   }
 
   public TaskDto getTask(Long id) {
     var task = taskRepository
       .findById(id)
       .orElseThrow(ItemNotFoundException::new);
-    return map(task);
+    return mapTask(task);
   }
 
   public void deleteTask(Long id) {
@@ -53,7 +59,7 @@ public class TaskService {
     return taskRepository
       .findByDateInAndUser(dates, this.authService.getCurrentUser())
       .stream()
-      .map(this::map)
+      .map(this::mapTask)
       .toList();
   }
 
@@ -61,11 +67,19 @@ public class TaskService {
     return taskRepository
       .findByUserAndDateIsNull(this.authService.getCurrentUser())
       .stream()
-      .map(this::map)
+      .map(this::mapTask)
       .toList();
   }
 
-  private TaskDto map(Task task) {
+  public List<TaskTimerDto> getTaskTimers() {
+    return taskTimerRepository
+      .findByTaskUser(this.authService.getCurrentUser())
+      .stream()
+      .map(this::mapTimer)
+      .toList();
+  }
+
+  private TaskDto mapTask(Task task) {
     return new TaskDto(
       task.getId(),
       task.getPreviousId(),
@@ -74,6 +88,13 @@ public class TaskService {
       task.getDetails(),
       task.getComplete(),
       task.getDuration()
+    );
+  }
+
+  private TaskTimerDto mapTimer(TaskTimer taskTimer) {
+    return new TaskTimerDto(
+      taskTimer.getTask().getId(),
+      taskTimer.getTimestamp()
     );
   }
 }

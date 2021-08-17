@@ -4,6 +4,7 @@ import eu.silktrader.kairos.tag.TaskTag;
 import eu.silktrader.kairos.user.User;
 import java.time.LocalDate;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -64,6 +67,10 @@ public class Task {
 
   @OneToMany(mappedBy = "task")
   private Set<TaskTag> taskTags;
+
+  @OneToOne(mappedBy = "task", cascade = CascadeType.ALL) // cascade facilitates removals
+  @PrimaryKeyJoinColumn
+  private TaskTimer taskTimer;
 
   public Set<TaskTag> getTaskTags() {
     return taskTags;

@@ -31,6 +31,11 @@ public class TaskController {
     return taskService.getUnscheduledTasks();
   }
 
+  @GetMapping("/timers")
+  public List<TaskTimerDto> getTaskTimers() {
+    return taskService.getTaskTimers();
+  }
+
   @GetMapping("/{id}")
   public TaskDto getTask(@PathVariable("id") Long id) {
     return taskService.getTask(id);
