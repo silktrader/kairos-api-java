@@ -1,0 +1,11 @@
+## Composite Keys
+
+.Requirements
+* the composite primary key class must be public
+* must have a no-arg constructor
+* must define the `equals()` and `hashCode()` methods
+* must be serializable
+
+
+How to format JSON dates in DTOs:
+https://www.baeldung.com/spring-boot-formatting-json-dates

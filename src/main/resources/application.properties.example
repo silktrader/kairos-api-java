@@ -1,0 +1,10 @@
+
+spring.datasource.url=jdbc:h2:file:./data/kairos
+spring.datasource.driverClassName=org.h2.Driver
+# fill username and password with custom values
+spring.datasource.username=demo
+spring.datasource.password=demo
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true
+# it's preferable to recur to migrations and 'none' in production
+spring.jpa.hibernate.ddl-auto=update

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>Persistence</ID>
+  <OriginalElement>JavaeeElement:/d7095e1c/entityManagerFactory/kairos/jpa/JPA/PersistenceModel</OriginalElement>
+  <nodes>
+    <node x="134.96875" y="0.0">User#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/User.java</node>
+    <node x="-250.17605633802805" y="202.08978873239437">Habit#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/Habit.java</node>
+    <node x="-429.5616197183098" y="461.01408450704224">HabitEntry#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/HabitEntry.java</node>
+    <node x="551.3723462166577" y="234.0">Task#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/Task.java</node>
+    <node x="1.0" y="525.0">AbstractPersistable#jar://C:/Users/Silktrader/.m2/repository/org/springframework/data/spring-data-jpa/2.5.3/spring-data-jpa-2.5.3.jar!/org/springframework/data/jpa/domain/AbstractPersistable.class</node>
+    <node x="0.0" y="629.0">AbstractAuditable#jar://C:/Users/Silktrader/.m2/repository/org/springframework/data/spring-data-jpa/2.5.3/spring-data-jpa-2.5.3.jar!/org/springframework/data/jpa/domain/AbstractAuditable.class</node>
+    <node x="143.46875" y="202.08978873239437">Tag#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/Tag.java</node>
+    <node x="387.17528579205236" y="461.01408450704224">TaskTag#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/TaskTag.java</node>
+    <node x="-444.55105633802793" y="589.1426056338026">HabitEntryId#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/HabitEntryId.java</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Task#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/Task.java" target="User#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/User.java" relationship="RELATION">
+      <point x="-3.462166577037351E-4" y="-82.0" />
+      <point x="619.872" y="173.0" />
+      <point x="197.469" y="173.0" />
+      <point x="2.499999999940883E-4" y="71.0" />
+    </edge>
+    <edge source="Tag#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/Tag.java" target="User#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/User.java" relationship="RELATION">
+      <point x="2.499999999940883E-4" y="-48.999788732394364" />
+      <point x="2.499999999940883E-4" y="71.0" />
+    </edge>
+    <edge source="Task#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/Task.java" target="TaskTag#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/TaskTag.java" relationship="RELATION">
+      <point x="-3.462166577037351E-4" y="82.0" />
+      <point x="619.872" y="430.0" />
+      <point x="432.175" y="430.0" />
+      <point x="-2.8579205235246263E-4" y="-27.00008450704223" />
+    </edge>
+    <edge source="Tag#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/Tag.java" target="TaskTag#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/TaskTag.java" relationship="RELATION">
+      <point x="2.499999999940883E-4" y="49.00021126760561" />
+      <point x="197.469" y="430.0" />
+      <point x="432.175" y="430.0" />
+      <point x="-2.8579205235246263E-4" y="-27.00008450704223" />
+    </edge>
+    <edge source="HabitEntry#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/HabitEntry.java" target="Habit#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/Habit.java" relationship="RELATION">
+      <point x="0.0" y="-27.0" />
+      <point x="-366.0616197183098" y="262.08978873239437" />
+      <point x="-67.5" y="0.0" />
+    </edge>
+    <edge source="AbstractAuditable#jar://C:/Users/Silktrader/.m2/repository/org/springframework/data/spring-data-jpa/2.5.3/spring-data-jpa-2.5.3.jar!/org/springframework/data/jpa/domain/AbstractAuditable.class" target="AbstractPersistable#jar://C:/Users/Silktrader/.m2/repository/org/springframework/data/spring-data-jpa/2.5.3/spring-data-jpa-2.5.3.jar!/org/springframework/data/jpa/domain/AbstractPersistable.class" relationship="INHERITANCE">
+      <point x="0.0" y="-38.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="Habit#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/Habit.java" target="User#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/User.java" relationship="RELATION">
+      <point x="5.633802805959931E-5" y="-59.999788732394364" />
+      <point x="-182.676" y="173.0" />
+      <point x="197.469" y="173.0" />
+      <point x="2.499999999940883E-4" y="71.0" />
+    </edge>
+    <edge source="HabitEntry#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/HabitEntry.java" target="HabitEntryId#file://C:/Users/Silktrader/Documents/Repositories/kairos-api-java/src/main/java/eu/silktrader/kairos/domain/HabitEntryId.java" relationship="EMBEDDING_ID">
+      <point x="-18.489436619718106" y="27.000000000000057" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.783448275862069" showDependencies="false" x="122.0" y="352.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Embeddables</Category>
+    <Category>Properties</Category>
+    <Category>Superclasses</Category>
+  </Categories>
+</Diagram>
+

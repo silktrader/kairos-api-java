@@ -1,0 +1,8 @@
+= Kairos API
+
+This Spring Boot backend provides the means to read, store and update tasks, tags, habits pertaining to a *task management* application, named Kairos.
+
+== Installation
+
+* Replace `application.properties.example` with an adequate substitute, by filling in custom H2 login and password
+* Create a JKS file holding a keystore under `/src/main/resources`
