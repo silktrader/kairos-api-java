@@ -26,6 +26,11 @@ public class TaskController {
     return taskService.getTasks(dates);
   }
 
+  @GetMapping("/unscheduled")
+  public List<TaskDto> getUnscheduledTasks() {
+    return taskService.getUnscheduledTasks();
+  }
+
   @GetMapping("/{id}")
   public TaskDto getTask(@PathVariable("id") Long id) {
     return taskService.getTask(id);

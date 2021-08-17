@@ -30,8 +30,7 @@ public class Task {
 
   private String details;
 
-  @NotNull
-  private LocalDate date;
+  private LocalDate date; // null value signals unscheduled state
 
   public LocalDate getDate() {
     return date;

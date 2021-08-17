@@ -2,7 +2,6 @@ package eu.silktrader.kairos.task;
 
 import eu.silktrader.kairos.auth.AuthService;
 import eu.silktrader.kairos.exception.ItemNotFoundException;
-import eu.silktrader.kairos.exception.KairosException;
 import java.time.LocalDate;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -53,6 +52,14 @@ public class TaskService {
   public List<TaskDto> getTasks(List<LocalDate> dates) {
     return taskRepository
       .findByDateInAndUser(dates, this.authService.getCurrentUser())
+      .stream()
+      .map(this::map)
+      .toList();
+  }
+
+  public List<TaskDto> getUnscheduledTasks() {
+    return taskRepository
+      .findByUserAndDateIsNull(this.authService.getCurrentUser())
       .stream()
       .map(this::map)
       .toList();
