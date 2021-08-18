@@ -13,8 +13,8 @@ public class TaskController {
 
   private final TaskService taskService;
 
-  public TaskController(TaskService movieService) {
-    this.taskService = movieService;
+  public TaskController(TaskService taskService) {
+    this.taskService = taskService;
   }
 
   @GetMapping

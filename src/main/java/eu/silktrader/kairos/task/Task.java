@@ -3,6 +3,7 @@ package eu.silktrader.kairos.task;
 import eu.silktrader.kairos.tag.TaskTag;
 import eu.silktrader.kairos.user.User;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -66,7 +67,7 @@ public class Task {
   private User user;
 
   @OneToMany(mappedBy = "task")
-  private Set<TaskTag> taskTags;
+  private Set<TaskTag> taskTags = new HashSet<>();
 
   @OneToOne(mappedBy = "task", cascade = CascadeType.ALL) // cascade facilitates removals
   @PrimaryKeyJoinColumn
