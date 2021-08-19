@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthService {
+public class AuthService implements ICurrentUserProvider {
 
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
@@ -66,15 +66,16 @@ public class AuthService {
   }
 
   public User getCurrentUser() {
-    var principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-      .getContext()
-      .getAuthentication()
-      .getPrincipal();
+    return getUser(getCurrentUserName());
+  }
+
+  public String getCurrentUserName() {
+    return SecurityContextHolder.getContext().getAuthentication().getName();
+  }
+
+  public User getUser(String name) {
     return userRepository
-      .findByName(principal.getUsername())
-      .orElseThrow(
-        () ->
-          new KairosException("User " + principal.getUsername() + " not found")
-      );
+      .findByName(getCurrentUserName())
+      .orElseThrow(() -> new KairosException("User not found"));
   }
 }

@@ -26,7 +26,9 @@ public class Task {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private Long previousId;
+  @OneToOne
+  @JoinColumn(name = "previous_id", referencedColumnName = "id")
+  private Task previous;
 
   @NotEmpty
   @NotNull
@@ -35,26 +37,6 @@ public class Task {
   private String details;
 
   private LocalDate date; // null value signals unscheduled state
-
-  public LocalDate getDate() {
-    return date;
-  }
-
-  public void setDate(LocalDate date) {
-    this.date = date;
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  public void setTaskTags(Set<TaskTag> taskTags) {
-    this.taskTags = taskTags;
-  }
 
   @NotNull
   @Column(columnDefinition = "boolean default false")
@@ -73,8 +55,24 @@ public class Task {
   @PrimaryKeyJoinColumn
   private TaskTimer taskTimer;
 
-  public Set<TaskTag> getTaskTags() {
-    return taskTags;
+  public LocalDate getDate() {
+    return date;
+  }
+
+  public void setDate(LocalDate date) {
+    this.date = date;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public void setId(Long id) {
@@ -97,17 +95,37 @@ public class Task {
     this.details = details;
   }
 
-  public Long getPreviousId() {
-    return previousId;
+  public void setTaskTags(Set<TaskTag> taskTags) {
+    this.taskTags = taskTags;
   }
 
-  public void setPreviousId(Long previousId) {
-    this.previousId = previousId;
+  public Task getPrevious() {
+    return previous;
   }
 
-  public Long getId() {
-    return id;
+  public void setPrevious(Task previous) {
+    this.previous = previous;
   }
+
+  public TaskTimer getTaskTimer() {
+    return taskTimer;
+  }
+
+  public void setTaskTimer(TaskTimer taskTimer) {
+    this.taskTimer = taskTimer;
+  }
+
+  public Set<TaskTag> getTaskTags() {
+    return taskTags;
+  }
+
+  // public Long getPreviousId() {
+  //   return previousId;
+  // }
+
+  // public void setPreviousId(Long previousId) {
+  //   this.previousId = previousId;
+  // }
 
   public String getTitle() {
     return title;

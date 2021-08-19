@@ -49,4 +49,9 @@ public class TaskController {
       HttpStatus.CREATED
     );
   }
+
+  @DeleteMapping("/{id}")
+  public DeletedTaskDto deleteTask(@PathVariable("id") Long id) {
+    return taskService.deleteTask(id);
+  }
 }
