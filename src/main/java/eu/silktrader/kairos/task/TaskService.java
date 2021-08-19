@@ -2,6 +2,7 @@ package eu.silktrader.kairos.task;
 
 import eu.silktrader.kairos.auth.AuthService;
 import eu.silktrader.kairos.auth.ICurrentUserProvider;
+import eu.silktrader.kairos.exception.BadRequestException;
 import eu.silktrader.kairos.exception.ItemNotFoundException;
 import eu.silktrader.kairos.tag.Tag;
 import eu.silktrader.kairos.tag.TagService;
@@ -44,17 +45,10 @@ public class TaskService {
   public TaskDto addTask(TaskDto taskDto) {
     final String userName = userProvider.getCurrentUserName();
 
-    // when present find the previous task or throw; `Optional` would be pedantic
-    final var previousTask = taskDto.previousId() == null
-      ? null
-      : taskRepository
-        .findByIdAndUserName(taskDto.previousId(), userName)
-        .orElseThrow(ItemNotFoundException::new);
-
     // create new task with elementary details
     var task = new Task();
     task.setUser(userProvider.getUser(userName));
-    task.setPrevious(previousTask);
+    task.setPrevious(getPreviousTask(taskDto, userName)); // get previous task or throw relevant exceptions with matching responses
     task.setDate(taskDto.date());
     task.setTitle(taskDto.title());
     task.setDetails(taskDto.details());
@@ -77,6 +71,32 @@ public class TaskService {
 
     // save tag relationships and add the automatically assigned ID to the DTO
     return mapTask(taskRepository.save(tempTask));
+  }
+
+  // ensure the integrity of each date's linked list of tasks
+  private Task getPreviousTask(TaskDto taskDto, String userName) {
+    // prettier-ignore
+    // no previous task is specified
+    if (taskDto.previousId() == null) {
+      // there already is a null previous task; throw an exception and 400
+      if (taskRepository.existsByDateAndPreviousIsNullAndUserName(taskDto.date(), userName))
+        throw new BadRequestException();
+
+      // this is the first task of the day being added; a null value's legitimate
+      else return null;
+    }
+    
+    // a previous task was specified
+    else {
+      // the previous task is already referenced by another task; throw and exception and 400
+      if (taskRepository.existsByPreviousId(taskDto.previousId()))
+        throw new BadRequestException();
+
+      // return the previous task, provided it exists; else throw an exception and 404
+      return taskRepository
+        .findByIdAndUserName(taskDto.previousId(), userName)
+        .orElseThrow(ItemNotFoundException::new);
+    }
   }
 
   private void addTaskTag(Task task, Tag tag) {

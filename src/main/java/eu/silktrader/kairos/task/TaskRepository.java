@@ -16,4 +16,11 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
   Optional<Task> findByIdAndUserName(Long id, String userName);
 
   Optional<Task> findByPrevious(Task task);
+
+  Boolean existsByPreviousId(Long id);
+
+  Boolean existsByDateAndPreviousIsNullAndUserName(
+    LocalDate date,
+    String userName
+  );
 }
