@@ -16,8 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Task {
@@ -30,8 +32,8 @@ public class Task {
   @JoinColumn(name = "previous_id", referencedColumnName = "id")
   private Task previous;
 
-  @NotEmpty
-  @NotNull
+  @NotBlank
+  @Size(min = 5, max = 50)
   private String title;
 
   private String details;
@@ -42,6 +44,7 @@ public class Task {
   @Column(columnDefinition = "boolean default false")
   private Boolean complete;
 
+  @PositiveOrZero
   private Integer duration;
 
   @ManyToOne

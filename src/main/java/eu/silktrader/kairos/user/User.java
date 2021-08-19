@@ -1,5 +1,11 @@
 package eu.silktrader.kairos.user;
 
+import eu.silktrader.kairos.habit.Habit;
+import eu.silktrader.kairos.tag.Tag;
+import eu.silktrader.kairos.task.Task;
+import java.time.Instant;
+import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,88 +15,88 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
-import eu.silktrader.kairos.habit.Habit;
-import eu.silktrader.kairos.tag.Tag;
-import eu.silktrader.kairos.task.Task;
-
-import java.time.Instant;
-import java.util.Set;
-
 @Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @NotBlank(message="User name required")
-    private String name;
-    
-    @NotBlank(message="Password required")
-    private String password;
+  @NotBlank(message = "User name required")
+  private String name;
 
-    @NotEmpty(message="Valid email required")
-    @Email
-    private String email;
-    
-    private Instant created;
+  @NotBlank(message = "Password required")
+  private String password;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Task> tasks;
+  @NotEmpty(message = "Valid email required")
+  @Email
+  @Column(unique = true)
+  private String email;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Habit> habits;
+  private Instant created;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Tag> tags;
+  @OneToMany(mappedBy = "user")
+  private Set<Task> tasks;
 
-    public Long getId() {
-        return id;
-    }
+  @OneToMany(mappedBy = "user")
+  private Set<Habit> habits;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  @OneToMany(mappedBy = "user")
+  private Set<Tag> tags;
 
-    public String getName() {
-        return name;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public Instant getCreated() {
-        return created;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public User(Long id, String name, String password, String email, Instant created) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.email = email;
-        this.created = created;
-    }
+  public Instant getCreated() {
+    return created;
+  }
 
-    public User() { }
+  public void setCreated(Instant created) {
+    this.created = created;
+  }
+
+  public User(
+    Long id,
+    String name,
+    String password,
+    String email,
+    Instant created
+  ) {
+    this.id = id;
+    this.name = name;
+    this.password = password;
+    this.email = email;
+    this.created = created;
+  }
+
+  public User() {}
 }
