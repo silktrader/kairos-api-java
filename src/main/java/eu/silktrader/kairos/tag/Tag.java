@@ -10,9 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 public class Tag {
@@ -27,9 +25,10 @@ public class Tag {
 
   private String description;
 
-  @NotBlank
-  @Size(min = 3, max = 20)
-  private String colour;
+  @NotNull
+  @Min(0)
+  @Max(360)
+  private Short colour;
 
   @NotNull
   @ManyToOne
@@ -63,11 +62,11 @@ public class Tag {
     this.description = description;
   }
 
-  public String getColour() {
+  public Short getColour() {
     return colour;
   }
 
-  public void setColour(String colour) {
+  public void setColour(Short colour) {
     this.colour = colour;
   }
 
@@ -77,5 +76,13 @@ public class Tag {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public Set<TaskTag> getTaskTags() {
+    return taskTags;
+  }
+
+  public void setTaskTags(Set<TaskTag> taskTags) {
+    this.taskTags = taskTags;
   }
 }

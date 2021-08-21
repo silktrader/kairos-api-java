@@ -25,8 +25,14 @@ public class TaskTag {
 
   public TaskTag() {}
 
-  public TaskTag(Long tagId, Long taskId) {
-    this.id = new TaskTagId(tagId, taskId);
+  public TaskTag(Task task, Tag tag) {
+    this.task = task;
+    this.tag = tag;
+    this.id = new TaskTagId(task.getId(), tag.getId());
+  }
+
+  public TaskTagId getTaskTagId() {
+    return id;
   }
 
   public Task getTask() {

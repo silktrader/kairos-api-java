@@ -51,7 +51,7 @@ public class Task {
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval=true)
   private Set<TaskTag> taskTags = new HashSet<>();
 
   @OneToOne(mappedBy = "task", cascade = CascadeType.ALL) // cascade facilitates removals
@@ -99,7 +99,9 @@ public class Task {
   }
 
   public void setTaskTags(Set<TaskTag> taskTags) {
-    this.taskTags = taskTags;
+    // avoid clearing the set in case the method's argument matches the stored set
+    this.taskTags.retainAll(taskTags);
+    this.taskTags.addAll(taskTags);
   }
 
   public Task getPrevious() {
@@ -121,14 +123,6 @@ public class Task {
   public Set<TaskTag> getTaskTags() {
     return taskTags;
   }
-
-  // public Long getPreviousId() {
-  //   return previousId;
-  // }
-
-  // public void setPreviousId(Long previousId) {
-  //   this.previousId = previousId;
-  // }
 
   public String getTitle() {
     return title;

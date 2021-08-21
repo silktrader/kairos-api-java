@@ -25,16 +25,8 @@ public class TaskTagId implements Serializable {
     return tagId;
   }
 
-  public void setTagId(Long tagId) {
-    this.tagId = tagId;
-  }
-
   public Long getTaskId() {
     return taskId;
-  }
-
-  public void setTaskId(Long taskId) {
-    this.taskId = taskId;
   }
 
   @Override

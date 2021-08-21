@@ -59,7 +59,7 @@ public class TagService {
 
     // generate random colours with CSS compatible HSL strings, ideally different between each others and pastel looking
     // colours are meant to be edited subsequently by users
-    tag.setColour("hsl(" + colourSeed.nextFloat() + ", 0.95, 0.8");
+    tag.setColour((short) colourSeed.nextInt(361));
     return tagRepository.save(tag);
   }
 

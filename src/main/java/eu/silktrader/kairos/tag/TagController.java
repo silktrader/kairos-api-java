@@ -30,18 +30,18 @@ public class TagController {
 
   @GetMapping("/{id}")
   public TagDto getTag(@PathVariable Long id) {
-    return this.tagService.getTag(id);
+    return tagService.getTag(id);
   }
 
   @PostMapping
   public ResponseEntity<TagDto> addTag(@RequestBody TagDto tagDto) {
-    return new ResponseEntity<>(this.tagService.add(tagDto), HttpStatus.CREATED);
+    return new ResponseEntity<>(tagService.add(tagDto), HttpStatus.CREATED);
   }
 
   // returns 200 status by default, which seems acceptable
   @DeleteMapping("/{id}")
   public void deleteTag(@PathVariable("id") Long id) {
-    this.tagService.delete(id);
+    tagService.delete(id);
   }
   
 }

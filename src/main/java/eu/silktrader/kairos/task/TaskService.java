@@ -7,6 +7,7 @@ import eu.silktrader.kairos.exception.ItemNotFoundException;
 import eu.silktrader.kairos.tag.Tag;
 import eu.silktrader.kairos.tag.TagService;
 import eu.silktrader.kairos.tag.TaskTag;
+import eu.silktrader.kairos.tag.TaskTagId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class TaskService {
     final String userName = userProvider.getCurrentUserName();
 
     // create new task with elementary details
-    var task = new Task();
+    final var task = new Task();
     task.setUser(userProvider.getUser(userName));
     // get previous task or throw relevant exceptions with matching responses
     task.setPrevious(getPreviousTask(taskDto.previousId(), taskDto.date(), userName));
@@ -58,6 +59,7 @@ public class TaskService {
 
     // save entity and update local variable with the entity's ID
     // the ID is required to create new task tag entries
+    // tk can avoid tempTask??
     final var tempTask = taskRepository.save(task);
 
     // process tag titles
@@ -99,18 +101,18 @@ public class TaskService {
   }
 
   private void addTaskTag(Task task, Tag tag) {
-    var taskTag = new TaskTag(tag.getId(), task.getId());
+    final var taskTag = new TaskTag(task, tag);
     this.taskTagRepository.save(taskTag);
-    task.getTaskTags()
-        .add(
-            taskTag); // must save repository at the end of the process! possible room for issues tk
+    task.getTaskTags().add(taskTag);
+    // must save repository at the end of the process; possible room for issues if the save is omitted
   }
 
   public TaskDto getTask(Long id) {
-    var task = taskRepository.findById(id).orElseThrow(ItemNotFoundException::new);
+    final var task = taskRepository.findById(id).orElseThrow(ItemNotFoundException::new);
     return mapTask(task);
   }
 
+  @Transactional
   public TaskDto updateTask(TaskDto taskDto) {
     final var userName = this.userProvider.getCurrentUserName();
 
@@ -119,8 +121,6 @@ public class TaskService {
         taskRepository
             .findByIdAndUserName(taskDto.id(), userName)
             .orElseThrow(ItemNotFoundException::new);
-
-    // tk issue here
 
     // validate the previous task when changes are detected or throw relevant exceptions
     // allows comparison between null and Long
@@ -139,19 +139,16 @@ public class TaskService {
 
     var updatedTaskTags = new HashSet<TaskTag>();
     for (var tagTitle : taskDto.tags()) {
-      // task tag already exists
       updatedTaskTags.add(
           Objects.requireNonNullElseGet(
-              currentTags.get(tagTitle),
+              currentTags.get(tagTitle),  // the task tag already exists, use it
               () ->
                   tagService
                       .getTagByTitle(tagTitle)
                       // the tag already exists
-                      .map(tag -> new TaskTag(tag.getId(), task.getId()))
+                      .map(tag -> taskTagRepository.save(new TaskTag(task, tag)))
                       // create a new tag
-                      .orElseGet(
-                          () ->
-                              new TaskTag(tagService.createTag(tagTitle).getId(), task.getId()))));
+                      .orElseGet(() -> taskTagRepository.save(new TaskTag(task, tagService.createTag(tagTitle))))));
     }
 
     // overwrite task tags with new ones; old and orphaned task tags will be automatically removed by the cascade
