@@ -13,11 +13,6 @@ public class TaskTag {
   @EmbeddedId
   private TaskTagId id;
 
-  // @ManyToOne
-  // @MapsId("habitId")
-  // @JoinColumn(name = "habit_id")
-  // private Habit habit;
-
   @ManyToOne(optional = false)
   @MapsId("taskId")
   @JoinColumn(nullable = false, updatable = false)
@@ -28,8 +23,10 @@ public class TaskTag {
   @JoinColumn(nullable = false, updatable = false)
   private Tag tag;
 
-  public TaskTag(TaskTagId id) {
-    this.id = id;
+  public TaskTag() {}
+
+  public TaskTag(Long tagId, Long taskId) {
+    this.id = new TaskTagId(tagId, taskId);
   }
 
   public Task getTask() {

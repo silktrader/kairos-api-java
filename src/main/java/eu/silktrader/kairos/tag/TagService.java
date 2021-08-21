@@ -55,12 +55,12 @@ public class TagService {
   public Tag createTag(String title) {
     var tag = new Tag();
     tag.setTitle(title);
-    tag.setUser(this.authService.getCurrentUser());
+    tag.setUser(authService.getCurrentUser());
 
     // generate random colours with CSS compatible HSL strings, ideally different between each others and pastel looking
     // colours are meant to be edited subsequently by users
     tag.setColour("hsl(" + colourSeed.nextFloat() + ", 0.95, 0.8");
-    return this.tagRepository.save(tag);
+    return tagRepository.save(tag);
   }
 
   public void delete(Long id) {

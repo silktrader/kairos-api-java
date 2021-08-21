@@ -50,6 +50,11 @@ public class TaskController {
     );
   }
 
+  @PutMapping("/{id}/edit")
+  public TaskDto updateTask(@PathVariable("id") Long id, @RequestBody TaskDto taskDto) {
+    return taskService.updateTask(taskDto);
+  }
+
   @DeleteMapping("/{id}")
   public DeletedTaskDto deleteTask(@PathVariable("id") Long id) {
     return taskService.deleteTask(id);

@@ -51,7 +51,7 @@ public class Task {
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  @OneToMany(mappedBy = "task")
+  @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
   private Set<TaskTag> taskTags = new HashSet<>();
 
   @OneToOne(mappedBy = "task", cascade = CascadeType.ALL) // cascade facilitates removals
