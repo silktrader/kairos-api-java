@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,7 @@ public class TagController {
 
   @Autowired
   public TagController(TagService tagService) {
-    this.tagService= tagService;
+    this.tagService = tagService;
   }
 
   @GetMapping
@@ -38,10 +39,14 @@ public class TagController {
     return new ResponseEntity<>(tagService.add(tagDto), HttpStatus.CREATED);
   }
 
+  @PutMapping("/{id}")
+  public TagDto editTag(@PathVariable Long id, @RequestBody TagDto tagDto) {
+    return tagService.editTag(tagDto);
+  }
+
   // returns 200 status by default, which seems acceptable
   @DeleteMapping("/{id}")
   public void deleteTag(@PathVariable("id") Long id) {
     tagService.delete(id);
   }
-  
 }

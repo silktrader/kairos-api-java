@@ -2,6 +2,7 @@ package eu.silktrader.kairos.tag;
 
 import eu.silktrader.kairos.auth.AuthService;
 import eu.silktrader.kairos.exception.ItemNotFoundException;
+import eu.silktrader.kairos.task.TaskRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -32,6 +33,17 @@ public class TagService {
     return map(
       tagRepository.findById(id).orElseThrow(ItemNotFoundException::new)
     );
+  }
+
+  public TagDto editTag(TagDto tagDto) {
+    final Tag tag = tagRepository
+      .findByIdAndUserName(tagDto.id(), authService.getCurrentUserName())
+      .orElseThrow(ItemNotFoundException::new);
+
+    tag.setTitle(tagDto.title());
+    tag.setDescription(tagDto.description());
+    tag.setColour(tagDto.colour());
+    return map(tagRepository.save(tag));
   }
 
   public Optional<Tag> getTagByTitle(String title) {
