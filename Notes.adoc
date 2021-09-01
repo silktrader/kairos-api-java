@@ -13,3 +13,8 @@ https://www.baeldung.com/spring-boot-formatting-json-dates
 ## Various
 
 * The `Transactional` decoration returns `403` codes through exceptions, rather than throwing `500` exceptions.
+* Produce a JAR with `./mvnw.cmd clean package` on Windows, run it with `java -jar target.jar`
+
+## Todo
+
+* check out the `dev-tools` Maven dependency for hot reloading

@@ -58,6 +58,11 @@ public class TaskController {
     return taskService.updateTask(taskDto);
   }
 
+  @PutMapping
+  public List<TaskDto> updateTasks(@RequestBody List<TaskDto> tasksDtos) {
+    return taskService.updateTasks(tasksDtos);
+  }
+
   @DeleteMapping("/{id}")
   public DeletedTaskDto deleteTask(@PathVariable("id") Long id) {
     return taskService.deleteTask(id);
